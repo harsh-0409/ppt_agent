@@ -1,0 +1,7 @@
+openai
+python-pptx
+requests
+python-dotenv
+fastapi
+uvicorn
+python-multipart

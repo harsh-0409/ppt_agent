@@ -1,4 +1,0 @@
-openai
-python-pptx
-requests
-python-dotenv
