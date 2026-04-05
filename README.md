@@ -91,23 +91,23 @@ The system is highly modular, separating the web GUI, the API routing layer, and
 
 ```mermaid
 flowchart TD
-    UI[Web UI (React)] -->|Topic & Settings| API[FastAPI Endpoint]
-    API --> Plan[Agent: Plan Slide Outline]
-    Plan --> loopStart{{For Each Slide}}
+    UI["Web UI (React)"] -->|Topic and Settings| API["FastAPI Endpoint"]
+    API --> Plan["Agent: Plan Slide Outline"]
+    Plan --> loopStart{{"For Each Slide"}}
     
-    subgraph tools.py [Tools & Compilation]
-        Expand[LLM: Write Bullets]
-        Images[Fetch Slide Image]
-        Structure[Structure Slide Object]
-        Compile[Apply PowerPoint Layout]
+    subgraph tools_compilation [Tools and Compilation]
+        Expand["LLM: Write Bullets"]
+        Images["Fetch Slide Image"]
+        Structure["Structure Slide Object"]
+        Compile["Apply PowerPoint Layout"]
     end
     
     loopStart --> Expand --> Images --> Structure
     Structure --> Compile
-    Compile -- Next Slide --> loopStart
+    Compile -->|Next Slide| loopStart
     
-    Compile -- All Done --> Return([Send .pptx to Client UI])
-    Return --> Down[User Downloads File]
+    Compile -->|All Done| Return(["Send .pptx to Client UI"])
+    Return --> Down["User Downloads File"]
 ```
 
 ---
