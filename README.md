@@ -18,9 +18,7 @@ By leveraging Large Language Models and dynamic image generation APIs, the Auto 
 
 See the Auto PPT Agent in action!
 
-- 📺 [**Watch the 2-minute Quick Demo**](https://1drv.ms/v/c/75e01f03144d2386/IQADHibZlcluTrui5cIcGJMFASmSC9_HRnUj4k1XGpJJulU?e=Oe86x4)
-- 📺 [**Watch the 10-minute Code Explanation & Deep Dive**](https://1drv.ms/v/c/75e01f03144d2386/IQBpT1PncEtVQbxp1IcXz3Y5AQhS8_namSxjOSYrgJY3eiE?e=Whp2tI)
-
+- 📺 [**Watch the 2-minute Quick Demo**](https://drive.google.com/file/d/1dw-CLu41Woc6Okaa-9OF-d3Hz_Mt9ONe/view?usp=sharing)
 ---
 
 ## 🛠️ Installation & Setup
