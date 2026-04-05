@@ -1,99 +1,88 @@
 # Auto PPT Agent
 
-A fully automated, AI-powered PowerPoint generation system that creates visually appealing, content-rich presentations from a single topic prompt. The project leverages LLMs and dynamic image generation to generate professional PPTs with minimal user input.
+A fully automated, AI-powered PowerPoint generation system that creates visually appealing, content-rich presentations from a single topic prompt. 
+
+By leveraging Large Language Models and dynamic image generation APIs, the Auto PPT Agent builds completely customized `.pptx` files with professional slide outlines, tailored bullet points, and perfectly contextual images—minimizing user effort to just a single terminal command.
 
 ---
 
-## 🚀 Overview
-Auto PPT Agent is a modular Python system that:
-- Accepts a topic and slide count from the user via the command line.
-- Plans slide subtopics using a pre-configured LLM (supports OpenAI, Gemini, and Grok).
-- Dynamically generates slide content (titles and bullet points).
-- Fetches perfectly tailored images via Pollinations.ai based on slide content.
-- Assembles and saves a complete PowerPoint file (`.pptx`) with structured layouts.
+## ✨ Features
+- **Zero-to-PPT in Seconds**: Give it a topic, and it plans, writes, and formats a full presentation automatically.
+- **Multi-LLM Support**: Natively compatible with **OpenAI**, **Gemini**, and **Grok** APIs.
+- **Dynamic Image Generation**: Automatically generates contextual, perfectly tailored images for every individual slide using Pollinations.ai.
+- **Native `.pptx` Exports**: Outputs standard PowerPoint files ready to be opened, presented, or manually tweaked.
 
 ---
 
-## 🏗️ Architecture Diagram
+## 🖥️ Demo 
 
-```mermaid
-graph TD
-    A[main.py: Parse User Input] --> B[agent.py: AutoPPTAgent]
-    B --> C[LLM: Plan Slide Titles]
-    C --> D[For Each Slide]
-    D --> E[tools.py: generate_slide_content]
-    E --> F[tools.py: fetch_image]
-    F --> G[tools.py: create_slide]
-    G --> H[tools.py: build_ppt]
-    H --> I[Save & Output .pptx]
+See the Auto PPT Agent in action!
+
+- 📺 [**Watch the 2-minute Quick Demo**](https://1drv.ms/v/c/75e01f03144d2386/IQADHibZlcluTrui5cIcGJMFASmSC9_HRnUj4k1XGpJJulU?e=Oe86x4)
+- 📺 [**Watch the 10-minute Code Explanation & Deep Dive**](https://1drv.ms/v/c/75e01f03144d2386/IQBpT1PncEtVQbxp1IcXz3Y5AQhS8_namSxjOSYrgJY3eiE?e=Whp2tI)
+
+---
+
+## 🛠️ Installation & Setup
+
+1. **Clone or Download the Repository**
+2. **Install Dependencies**  
+   Ensure you have Python installed, then run:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. **Configure your API Keys**  
+   Rename `.env.example` to `.env` in the root directory and add your preferred provider's API key:
+   ```env
+   OPENAI_API_KEY=your_openai_api_key_here
+   GEMINI_API_KEY=your_gemini_api_key_here
+   XAI_API_KEY=your_grok_api_key_here
+   ```
+   *(The system will automatically detect which key is available and select the appropriate model.)*
+
+---
+
+## 💻 Usage
+
+Run the agent via the terminal by passing your desired presentation topic. 
+
+```bash
+python main.py "Explain Machine Learning for Beginners"
 ```
 
----
-
-## 🧩 Component Table
-
-| Component         | Description                                                                 | Key Tools/Functions                |
-|-------------------|-----------------------------------------------------------------------------|------------------------------------|
-| **main.py**       | Entry point for the application. Parses CLI arguments (topic, slides) and invokes the agent. | `main()` |
-| **agent.py**      | Orchestrates the workflow. Initializes the LLM client, plans slides, and drives the slide creation loop. | `AutoPPTAgent`, `plan_slides`, `generate_ppt` |
-| **tools.py**      | Handles specific tasks: generating content, fetching images, structurig objects, and PPT building. | `generate_slide_content`, `fetch_image`, `create_slide`, `build_ppt`, `get_llm_client_and_model` |
-| **.env**          | Stores API keys for respective LLM providers.                               | `OPENAI_API_KEY`, `GEMINI_API_KEY`, `XAI_API_KEY` |
+The script will outline the slides, fetch images, assemble the presentation, and export a final `.pptx` file directly to your project folder.
 
 ---
 
-## 🛠️ Tools Table
+## 🏗️ Architecture & Workflow
 
-| File/Module    | Tool/Function Name      | Purpose                                                      |
-|----------------|-------------------------|--------------------------------------------------------------|
-| `tools.py`     | `generate_slide_content`| Queries the LLM to write 3-5 concise bullet points and a slide title. |
-| `tools.py`     | `fetch_image`           | Fetches a relevant free-to-use generated image using Pollinations.ai. |
-| `tools.py`     | `create_slide`          | Structures the title, bullet points, and image into a slide object. |
-| `tools.py`     | `build_ppt`             | Creates the actual `python-pptx` presentation and saves it to disk. |
+The system is highly modular, separating the logic of LLM orchestration from the actual file manipulation tools.
 
----
-
-## ⚙️ Workflow Table
-
-| Step | Action                                      | Responsible Component/Tool         |
-|------|---------------------------------------------|------------------------------------|
-| 1    | User provides topic string and slide count  | `main.py`                          |
-| 2    | LLM generates logical slide subtopics       | `agent.py` (`plan_slides`)         |
-| 3    | LLM expands subtopic into bullet points     | `tools.py` (`generate_slide_content`) |
-| 4    | Construct search query and fetch image      | `tools.py` (`fetch_image`)         |
-| 5    | Assemble text and image data                | `tools.py` (`create_slide`)        |
-| 6    | Compile slides into `.pptx` and format      | `tools.py` (`build_ppt`)           |
-| 7    | Save final output to computer               | `agent.py`                         |
-
----
-
-## 🔄 Detailed Flowchart
+1. `main.py` parses the user's terminal input and triggers the agent.
+2. `agent.py` queries the LLM to strategically outline subtopics.
+3. For every subtopic, `tools.py` steps in:
+   - Queries the LLM to write concise bullet points.
+   - Fetches a dynamically generated AI image tailored to the slide contents.
+   - Embeds the content and picture into a `python-pptx` template.
 
 ```mermaid
 flowchart TD
-    Start([Start])
-    Input[User Input: Topic in Terminal]
-    Plan[Agent: Generate Slide Outline / Titles]
-    loopStart{{For Each Slide in Outline}}
-    Expand[LLM: Expand Title to Bullets]
-    Images[Image Tool: Fetch relevant image]
-    Structure[Tool: Create Slide Object]
-    Compile[List of Ready Slides]
-    Builder[PPTX Tool: Apply Layout & Save]
-    End([End])
-
-    Start --> Input --> Plan --> loopStart
+    Input[Terminal Command: Topic] --> Plan[Agent: Plan Slide Outline]
+    Plan --> loopStart{{For Each Slide}}
+    
+    subgraph tools.py [Tools & Compilation]
+        Expand[LLM: Write Bullets]
+        Images[Fetch Slide Image]
+        Structure[Structure Slide Object]
+        Compile[Apply PowerPoint Layout]
+    end
+    
     loopStart --> Expand --> Images --> Structure
     Structure --> Compile
-    Compile -- All Slides Done --> Builder
-    Builder --> End
+    Compile -- Next Slide --> loopStart
+    
+    Compile -- All Done --> Output([Save .pptx File])
 ```
-
----
-
-## 🖥️ Demo Video
-[Watch the code explanation + demo here (10min video)](https://1drv.ms/v/c/75e01f03144d2386/IQBpT1PncEtVQbxp1IcXz3Y5AQhS8_namSxjOSYrgJY3eiE?e=Whp2tI)
-
-[Watch the 2 min demo here](https://1drv.ms/v/c/75e01f03144d2386/IQADHibZlcluTrui5cIcGJMFASmSC9_HRnUj4k1XGpJJulU?e=Oe86x4)
 
 ---
 
@@ -103,21 +92,8 @@ flowchart TD
 auto_ppt_agent/
 ├── agent.py               # Orchestration and Agent Logic
 ├── main.py                # Command-line Entry Point
-├── tools.py               # Core actions (PPT rendering, text generation)
+├── tools.py               # Core actions (PPT rendering, LLM parsing, image generation)
 ├── requirements.txt       # Python Dependencies
 ├── .env.example           # Example API Key setups
-└── README.md              # You are here
+└── README.md              # Documentation
 ```
-
----
-
-## 📝 Notes
-- **API Keys**: Supports OpenAI (`OPENAI_API_KEY`), Gemini (`GEMINI_API_KEY`), or Grok (`XAI_API_KEY`). Add your preferred platform's key to the `.env` file.
-- All LLM prompts are completely customizable via `agent.py` and `tools.py`.
-- Images are retrieved dynamically from an open image generation API so you will never get a placeholder.
-- **Running the code**: Use `python main.py "Your Topic Here"` to start.
-
----
-
-## 📧 Contact
-For questions, suggestions, or contributions, please open an issue or contact the maintainer.
